@@ -2,6 +2,9 @@
 using System.Drawing;
 using System.IO;
 
+//priority queue test
+using PriorityQueue;
+
 namespace bsc_sc_path_finder
 {    
     public static class GridLoader
