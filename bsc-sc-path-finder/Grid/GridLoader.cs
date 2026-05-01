@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Drawing;
 using System.IO;
+using bsc_sc_path_finder.Jobs;
+
 
 //priority queue test
 using PriorityQueue;
@@ -64,6 +66,8 @@ namespace bsc_sc_path_finder
                         case 'F':
                             type = new FloorTileType();
                             break;
+                        case '1':
+                            type = new CheckBotanist();
                         default: throw new FormatException(string.Format("Unrecognized tile symbol '{0}' at row {1}, column {2}.", symbol));
                     }
                     tiles[x, y] = new Tile(x, y, type);
