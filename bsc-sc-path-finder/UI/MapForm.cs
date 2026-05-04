@@ -92,9 +92,24 @@ namespace bsc_sc_path_finder
             }
         }
 
-        public static void OnPathAnimationComplete()
+        public void OnPathAnimationComplete()
         {
             MessageBox.Show("Move operation complete");
+
+            removeGridTask();
+        }
+
+        public void removeGridTask()
+        {
+            Job location = jobManager.GetJob();
+
+            grid.GetTile(location.Location.X, location.Location.Y).Type = new FloorTileType();
+
+            Panel_Map.Invalidate();
+
+            jobManager.RemoveJob();
+
+            Lbl_JobList.Text = jobManager.createList();
         }
 
         private void Btn_ExecuteJob_Click(object sender, EventArgs e)
@@ -105,15 +120,7 @@ namespace bsc_sc_path_finder
 
             var path = dumbPathFinder.FindPath(robot.Position, location.Location);
             pathAnimator.Start(path);
-
-            jobManager.RemoveJob();
-
-            Lbl_JobList.Text = jobManager.createList();
-        }        
-        
-        private void Lbl_JobList_Click(object sender, EventArgs e)
-        {
-
+            
         }
 
         private void CB_Implementation_SelectedIndexChanged(object sender, EventArgs e)
@@ -156,82 +163,78 @@ namespace bsc_sc_path_finder
 
         private void btn_CreateJob_Click(object sender, EventArgs e)
         {
+
+            Job newJob = new Job(0, JobLocation, " ");
+
+
             if (task == 0)
             {
                 JobLocation = new Point(2, 2);
 
-                Job Botanist = new Job(1, JobLocation, "check-botanist");
+                newJob = new Job(1, JobLocation, "check-botanist");
 
-                jobManager.AddJob(Botanist, Botanist.Priority);
+                grid.GetTile(JobLocation.X, JobLocation.Y).Type = new CheckBotanist();
 
-                MessageBox.Show("Check botanist job added");
             }
 
             if (task == 1)
             {
                 JobLocation = new Point(4, 6);
 
-                Job Footprints = new Job(2, JobLocation, "check-Footprint");
+                newJob = new Job(2, JobLocation, "check-Footprint");
 
-                jobManager.AddJob(Footprints, Footprints.Priority);
-
-                MessageBox.Show("Check footprints job added");
+                grid.GetTile(JobLocation.X, JobLocation.Y).Type = new CheckFootprint();
             }
 
             if (task == 2)
             {
                 JobLocation = new Point(7, 4);
 
-                Job Radtiation = new Job(3, JobLocation, "check-radiation");
+                newJob = new Job(3, JobLocation, "check-radiation");
 
-                jobManager.AddJob(Radtiation, Radtiation.Priority);
-
-                MessageBox.Show("Check radiation job added");
+                grid.GetTile(JobLocation.X, JobLocation.Y).Type = new CheckRadiation();
             }
 
             if (task == 3)
             {
                 JobLocation = new Point(9, 1);
 
-                Job Flag = new Job(4, JobLocation, "flag");
+                newJob = new Job(4, JobLocation, "flag");
 
-                jobManager.AddJob(Flag, Flag.Priority);
-
-                MessageBox.Show("view flag job added");
+                grid.GetTile(JobLocation.X, JobLocation.Y).Type = new Flag();
             }
 
             if (task == 4)
             {
                 JobLocation = new Point(4, 4);
 
-                Job Toolbox = new Job(5, JobLocation, "get-toolbox");
+                newJob = new Job(5, JobLocation, "get-toolbox");
 
-                jobManager.AddJob(Toolbox, Toolbox.Priority);
-
-                MessageBox.Show("Gather toolbox job added");
+                grid.GetTile(JobLocation.X, JobLocation.Y).Type = new GetToolbox();
             }
 
             if (task == 5)
             {
                 JobLocation = new Point(7, 7);
 
-                Job Panel = new Job(6, JobLocation, "panel-dust");
+                newJob = new Job(6, JobLocation, "panel-dust");
 
-                jobManager.AddJob(Panel, Panel.Priority);
-
-                MessageBox.Show("Dust Panel job added");
+                grid.GetTile(JobLocation.X, JobLocation.Y).Type = new PanelDust();
             }
 
             if (task == 6)
             {
-                JobLocation = new Point(5, 9);
+                JobLocation = new Point(18, 19);
 
-                Job Soil = new Job(7, JobLocation, "soil-sample");
+                newJob = new Job(7, JobLocation, "soil-sample");
 
-                jobManager.AddJob(Soil, Soil.Priority);
-
-                MessageBox.Show("Sample Soil job added");
+                grid.GetTile(JobLocation.X, JobLocation.Y).Type = new SoilSample();
             }
+
+
+            jobManager.AddJob(newJob, newJob.Priority);
+
+            Panel_Map.Invalidate();
 
             Lbl_JobList.Text = jobManager.createList();
         }
@@ -245,6 +248,12 @@ namespace bsc_sc_path_finder
         {
 
         }
+        
+        private void Lbl_JobList_Click(object sender, EventArgs e)
+        {
+
+        }
+
     }
 }
 
