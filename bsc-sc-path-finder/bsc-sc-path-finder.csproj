@@ -54,7 +54,7 @@
     <Compile Include="Grid\GridRenderer.cs" />
     <Compile Include="Grid\Robot.cs" />
     <Compile Include="Jobs\JobManager.cs" />
-    <Compile Include="Jobs\Jobs.cs" />
+    <Compile Include="Jobs\Job.cs" />
     <Compile Include="Pathing\DumbPathFinder.cs" />
     <Compile Include="Pathing\PathAnimator.cs" />
     <Compile Include="Tile\ITileType.cs" />

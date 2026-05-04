@@ -8,14 +8,14 @@ using PriorityQueue;
 namespace bsc_sc_path_finder.Jobs
 { 
 
-    internal class JobManager
+    public class JobManager
     {
 
-        private PriorityQueue<Jobs> jobQueue;
+        private SortedArrayPriorityQueue<Job> jobQueue;
 
         public JobManager()
         {
-            jobQueue = new SortedArrayPriorityQueue<Jobs>(100);
+            jobQueue = new SortedArrayPriorityQueue<Job>(100);
         }
 
         public bool CheckJobs()
@@ -27,7 +27,7 @@ namespace bsc_sc_path_finder.Jobs
         {
             try
             {
-                jobQueue.Dequeque();
+                jobQueue.Dequeue();
             }
             catch(QueueUnderflowException ex)
             {
@@ -35,12 +35,12 @@ namespace bsc_sc_path_finder.Jobs
             }
         }
 
-        public Jobs GetJob()
+        public Job GetJob()
         {
             return jobQueue.Peek();
         }
 
-        public void AddJob(Jobs job, int Priority)
+        public void AddJob(Job job, int Priority)
         {
             jobQueue.Enqueue(job,  Priority);
         }

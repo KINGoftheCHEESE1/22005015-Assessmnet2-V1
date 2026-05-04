@@ -1,5 +1,7 @@
-﻿using System;
+﻿using bsc_sc_path_finder.Jobs;
+using System;
 using System.Drawing;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace bsc_sc_path_finder
@@ -11,10 +13,15 @@ namespace bsc_sc_path_finder
         private Robot robot;
         private DumbPathFinder dumbPathFinder;
         private PathAnimator pathAnimator;
+        private int task;
+        private Point JobLocation;
+        private JobManager jobManager;
 
         public MapForm()
         {
             InitializeComponent();
+
+            jobManager = new JobManager();
 
             // Enable double buffering to avoid flicker on panel paint
             Panel_Map.GetType()
@@ -88,6 +95,135 @@ namespace bsc_sc_path_finder
         public static void OnPathAnimationComplete()
         {
             MessageBox.Show("Move operation complete");
+        }
+
+        private void Btn_ExecuteJob_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Lbl_RobotStatus_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void CB_Implementation_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (CB_Implementation.SelectedIndex == 0)
+            {
+                task = 0;
+            }
+
+            if (CB_Implementation.SelectedIndex == 1)
+            {
+                task = 1;
+            }
+
+            if (CB_Implementation.SelectedIndex == 2)
+            {
+                task = 2;
+            }
+
+            if (CB_Implementation.SelectedIndex == 3)
+            {
+                task = 3;
+            }
+
+            if (CB_Implementation.SelectedIndex == 4)
+            {
+                task = 4;
+            }
+
+            if (CB_Implementation.SelectedIndex == 5)
+            {
+                task = 5;
+            }
+
+            if (CB_Implementation.SelectedIndex == 6)
+            {
+                task = 6;
+            }
+        }
+
+        private void btn_CreateJob_Click(object sender, EventArgs e)
+        {
+            if(task == 0)
+            { 
+                JobLocation = new Point(2, 2);
+
+                Job Botanist = new Job(1, JobLocation, "check-botanist");
+
+                jobManager.AddJob(Botanist, Botanist.Priority);
+
+                MessageBox.Show("Check botanist job added");
+
+            }
+
+            if (task == 1)
+            {
+                JobLocation = new Point(4, 6);
+
+                Job Footprints = new Job(2, JobLocation, "check-Footprint");
+
+                jobManager.AddJob(Footprints, Footprints.Priority);
+
+                MessageBox.Show("Check footprints job added");
+            }
+
+            if (task == 2)
+            {
+                JobLocation = new Point(7, 4);
+
+                Job Radtiation = new Job(3, JobLocation, "check-radiation");
+
+                jobManager.AddJob(Radtiation, Radtiation.Priority);
+
+                MessageBox.Show("Check radiation job added");
+            }
+
+            if (task == 3)
+            {
+                JobLocation = new Point(9, 1);
+
+                Job Flag = new Job(4, JobLocation, "flag");
+
+                jobManager.AddJob(Flag, Flag.Priority);
+
+                MessageBox.Show("view flag job added");
+            }
+
+            if (task == 4)
+            {
+                JobLocation = new Point(4, 4);
+
+                Job Toolbox = new Job(5, JobLocation, "get-toolbox");
+
+                jobManager.AddJob(Toolbox, Toolbox.Priority);
+
+                MessageBox.Show("Gather toolbox job added");
+            }
+
+            if (task == 5)
+            {
+                JobLocation = new Point(7, 7);
+
+                Job Panel = new Job(6, JobLocation, "panel-dust");
+
+                jobManager.AddJob(Panel, Panel.Priority);
+
+                MessageBox.Show("Dust Panel job added");
+            }
+
+            if (task == 6)
+            {
+                JobLocation = new Point(5, 9);
+
+                Job Soil = new Job(7, JobLocation, "soil-sample");
+
+                jobManager.AddJob(Soil, Soil.Priority);
+
+                MessageBox.Show("Sample Soil job added");
+            }
         }
     }
 }

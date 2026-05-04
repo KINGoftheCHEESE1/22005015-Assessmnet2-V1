@@ -8,19 +8,17 @@ using PriorityQueue;
 
 namespace bsc_sc_path_finder.Jobs
 {
-    internal class Jobs
+    public class Job
     {
         public int Priority {  get; set; }
         public string Description { get; set; }
         public Point Location { get; set; }
 
-        public Jobs( int priority, Point location, string description)
+        public Job( int priority, Point location, string description)
         {
             Location = location;
             Priority = priority;
             Description = description;
         }
-
-
     }
 }
