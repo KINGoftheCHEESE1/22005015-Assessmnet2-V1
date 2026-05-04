@@ -63,8 +63,8 @@ namespace bsc_sc_path_finder
         }
 
         private void Panel_Map_Paint(object sender, PaintEventArgs e)
-        {            
-            if (gridRenderer != null) gridRenderer.Draw(e.Graphics, robot);            
+        {
+            if (gridRenderer != null) gridRenderer.Draw(e.Graphics, robot);
         }
 
         private void Panel_Map_MouseClick(object sender, MouseEventArgs e)
@@ -99,10 +99,19 @@ namespace bsc_sc_path_finder
 
         private void Btn_ExecuteJob_Click(object sender, EventArgs e)
         {
+            Job location = jobManager.GetJob();
 
-        }
+            Lbl_RobotStatus.Text = $"Moving to {location.Description}";
 
-        private void Lbl_RobotStatus_Click(object sender, EventArgs e)
+            var path = dumbPathFinder.FindPath(robot.Position, location.Location);
+            pathAnimator.Start(path);
+
+            jobManager.RemoveJob();
+
+            Lbl_JobList.Text = jobManager.createList();
+        }        
+        
+        private void Lbl_JobList_Click(object sender, EventArgs e)
         {
 
         }
@@ -147,8 +156,8 @@ namespace bsc_sc_path_finder
 
         private void btn_CreateJob_Click(object sender, EventArgs e)
         {
-            if(task == 0)
-            { 
+            if (task == 0)
+            {
                 JobLocation = new Point(2, 2);
 
                 Job Botanist = new Job(1, JobLocation, "check-botanist");
@@ -156,7 +165,6 @@ namespace bsc_sc_path_finder
                 jobManager.AddJob(Botanist, Botanist.Priority);
 
                 MessageBox.Show("Check botanist job added");
-
             }
 
             if (task == 1)
@@ -224,6 +232,20 @@ namespace bsc_sc_path_finder
 
                 MessageBox.Show("Sample Soil job added");
             }
+
+            Lbl_JobList.Text = jobManager.createList();
+        }
+        
+        private void Lbl_RobotStatus_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
+
+

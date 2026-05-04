@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -42,7 +43,14 @@ namespace bsc_sc_path_finder.Jobs
 
         public void AddJob(Job job, int Priority)
         {
-            jobQueue.Enqueue(job,  Priority);
+            jobQueue.Enqueue(job, Priority);
+        }
+
+        public string createList()
+        {
+            string taskList = jobQueue.ToString();
+
+            return taskList;
         }
     }
 }

@@ -101,6 +101,7 @@
             this.pictureBox1.Size = new System.Drawing.Size(150, 150);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
+            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
             // Lbl_RobotStatus
             // 
@@ -140,6 +141,7 @@
             this.Lbl_JobList.Size = new System.Drawing.Size(476, 256);
             this.Lbl_JobList.TabIndex = 4;
             this.Lbl_JobList.Text = "No items to display";
+            this.Lbl_JobList.Click += new System.EventHandler(this.Lbl_JobList_Click);
             // 
             // btn_CreateJob
             // 

@@ -10,7 +10,7 @@ using PriorityQueue;
 namespace bsc_sc_path_finder
 {    
     public static class GridLoader
-    {
+    {         
         public static (Grid grid, Point robotStart) LoadFromFile(string path)
         {
             // Throw exception if path not provided, or path is null
@@ -68,9 +68,12 @@ namespace bsc_sc_path_finder
                             break;
                         default: throw new FormatException(string.Format("Unrecognized tile symbol '{0}' at row {1}, column {2}.", symbol));
                     }
+
                     tiles[x, y] = new Tile(x, y, type);
                 }
             }
+
+   
 
             // Validate 1 valid robot start position provided
             if (robotStartCounter == 0) throw new InvalidDataException("Grid must contain starting robot position tile (symbol 'R')");
