@@ -179,7 +179,7 @@ namespace bsc_sc_path_finder
 
             if (task == 1)
             {
-                JobLocation = new Point(4, 6);
+                JobLocation = new Point(3, 5);
 
                 newJob = new Job(2, JobLocation, "check-Footprint");
 
@@ -188,7 +188,7 @@ namespace bsc_sc_path_finder
 
             if (task == 2)
             {
-                JobLocation = new Point(7, 4);
+                JobLocation = new Point(17, 6);
 
                 newJob = new Job(3, JobLocation, "check-radiation");
 
@@ -197,7 +197,7 @@ namespace bsc_sc_path_finder
 
             if (task == 3)
             {
-                JobLocation = new Point(9, 1);
+                JobLocation = new Point(9, 0);
 
                 newJob = new Job(4, JobLocation, "flag");
 
@@ -206,7 +206,7 @@ namespace bsc_sc_path_finder
 
             if (task == 4)
             {
-                JobLocation = new Point(4, 4);
+                JobLocation = new Point(2, 17);
 
                 newJob = new Job(5, JobLocation, "get-toolbox");
 
@@ -215,7 +215,7 @@ namespace bsc_sc_path_finder
 
             if (task == 5)
             {
-                JobLocation = new Point(7, 7);
+                JobLocation = new Point(0, 1);
 
                 newJob = new Job(6, JobLocation, "panel-dust");
 
