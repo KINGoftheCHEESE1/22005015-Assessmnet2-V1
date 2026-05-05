@@ -37,6 +37,8 @@
             this.Lbl_RobotStatus = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.Lbl_JobList = new System.Windows.Forms.Label();
+            this.btn_CreateJob = new System.Windows.Forms.Button();
+            this.CB_Implementation = new System.Windows.Forms.ComboBox();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -74,6 +76,7 @@
             this.Btn_ExecuteJob.TabIndex = 2;
             this.Btn_ExecuteJob.Text = "Execute Job";
             this.Btn_ExecuteJob.UseVisualStyleBackColor = false;
+            this.Btn_ExecuteJob.Click += new System.EventHandler(this.Btn_ExecuteJob_Click);
             // 
             // Btn_LoadMap
             // 
@@ -98,6 +101,7 @@
             this.pictureBox1.Size = new System.Drawing.Size(150, 150);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
+            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
             // Lbl_RobotStatus
             // 
@@ -107,10 +111,11 @@
             this.Lbl_RobotStatus.Location = new System.Drawing.Point(658, 324);
             this.Lbl_RobotStatus.Name = "Lbl_RobotStatus";
             this.Lbl_RobotStatus.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
-            this.Lbl_RobotStatus.Size = new System.Drawing.Size(476, 34);
+            this.Lbl_RobotStatus.Size = new System.Drawing.Size(240, 34);
             this.Lbl_RobotStatus.TabIndex = 2;
             this.Lbl_RobotStatus.Text = "> Awaiting Instructions";
             this.Lbl_RobotStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Lbl_RobotStatus.Click += new System.EventHandler(this.Lbl_RobotStatus_Click);
             // 
             // label2
             // 
@@ -136,6 +141,42 @@
             this.Lbl_JobList.Size = new System.Drawing.Size(476, 256);
             this.Lbl_JobList.TabIndex = 4;
             this.Lbl_JobList.Text = "No items to display";
+            this.Lbl_JobList.Click += new System.EventHandler(this.Lbl_JobList_Click);
+            // 
+            // btn_CreateJob
+            // 
+            this.btn_CreateJob.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(183)))), ((int)(((byte)(111)))), ((int)(((byte)(52)))));
+            this.btn_CreateJob.FlatAppearance.BorderSize = 2;
+            this.btn_CreateJob.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_CreateJob.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_CreateJob.Location = new System.Drawing.Point(1032, 327);
+            this.btn_CreateJob.Name = "btn_CreateJob";
+            this.btn_CreateJob.Size = new System.Drawing.Size(97, 28);
+            this.btn_CreateJob.TabIndex = 3;
+            this.btn_CreateJob.Text = "Add Job";
+            this.btn_CreateJob.UseVisualStyleBackColor = false;
+            this.btn_CreateJob.Click += new System.EventHandler(this.btn_CreateJob_Click);
+            // 
+            // CB_Implementation
+            // 
+            this.CB_Implementation.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(183)))), ((int)(((byte)(111)))), ((int)(((byte)(52)))));
+            this.CB_Implementation.CausesValidation = false;
+            this.CB_Implementation.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CB_Implementation.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.CB_Implementation.FormattingEnabled = true;
+            this.CB_Implementation.Items.AddRange(new object[] {
+            "Check Botanist",
+            "Check Footprints",
+            "Check Radiation",
+            "Check Flag",
+            "Gather Toolbox",
+            "Dust Panel",
+            "Sample Soil"});
+            this.CB_Implementation.Location = new System.Drawing.Point(904, 329);
+            this.CB_Implementation.Name = "CB_Implementation";
+            this.CB_Implementation.Size = new System.Drawing.Size(122, 26);
+            this.CB_Implementation.TabIndex = 4;
+            this.CB_Implementation.SelectedIndexChanged += new System.EventHandler(this.CB_Implementation_SelectedIndexChanged);
             // 
             // MapForm
             // 
@@ -143,6 +184,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(223)))), ((int)(((byte)(196)))), ((int)(((byte)(153)))));
             this.ClientSize = new System.Drawing.Size(1141, 664);
+            this.Controls.Add(this.CB_Implementation);
+            this.Controls.Add(this.btn_CreateJob);
             this.Controls.Add(this.Lbl_JobList);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.Lbl_RobotStatus);
@@ -166,6 +209,8 @@
         private System.Windows.Forms.Label Lbl_JobList;
         private System.Windows.Forms.Button Btn_ExecuteJob;
         private System.Windows.Forms.Button Btn_LoadMap;
+        private System.Windows.Forms.Button btn_CreateJob;
+        private System.Windows.Forms.ComboBox CB_Implementation;
     }
 }
 

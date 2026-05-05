@@ -1,5 +1,7 @@
-﻿using System;
+﻿using bsc_sc_path_finder.Jobs;
+using System;
 using System.Drawing;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace bsc_sc_path_finder
@@ -11,10 +13,15 @@ namespace bsc_sc_path_finder
         private Robot robot;
         private DumbPathFinder dumbPathFinder;
         private PathAnimator pathAnimator;
+        private int task;
+        private Point JobLocation;
+        private JobManager jobManager;
 
         public MapForm()
         {
             InitializeComponent();
+
+            jobManager = new JobManager();
 
             // Enable double buffering to avoid flicker on panel paint
             Panel_Map.GetType()
@@ -56,8 +63,8 @@ namespace bsc_sc_path_finder
         }
 
         private void Panel_Map_Paint(object sender, PaintEventArgs e)
-        {            
-            if (gridRenderer != null) gridRenderer.Draw(e.Graphics, robot);            
+        {
+            if (gridRenderer != null) gridRenderer.Draw(e.Graphics, robot);
         }
 
         private void Panel_Map_MouseClick(object sender, MouseEventArgs e)
@@ -89,5 +96,168 @@ namespace bsc_sc_path_finder
         {
             MessageBox.Show("Move operation complete");
         }
+
+        //removes the grid tile for the current task, the job from queue and rewrites the upcoming jobs list
+        public void removeGridTask()
+        {
+            Job location = jobManager.GetJob();
+
+            grid.GetTile(location.Location.X, location.Location.Y).Type = new FloorTileType();
+
+            Panel_Map.Invalidate();
+
+            jobManager.RemoveJob();
+
+            Lbl_JobList.Text = jobManager.createList();
+        }
+
+        //creates a path to the next highest priority task and moves robot there
+        private void Btn_ExecuteJob_Click(object sender, EventArgs e)
+        {
+            Job location = jobManager.GetJob();
+
+            Lbl_RobotStatus.Text = $"Moving to {location.Description}";
+
+            var path = dumbPathFinder.FindPath(robot.Position, location.Location);
+            pathAnimator.Start(path);
+
+            removeGridTask();
+        }
+
+        //drop down menu to select task
+        private void CB_Implementation_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (CB_Implementation.SelectedIndex == 0)
+            {
+                task = 0;
+            }
+
+            if (CB_Implementation.SelectedIndex == 1)
+            {
+                task = 1;
+            }
+
+            if (CB_Implementation.SelectedIndex == 2)
+            {
+                task = 2;
+            }
+
+            if (CB_Implementation.SelectedIndex == 3)
+            {
+                task = 3;
+            }
+
+            if (CB_Implementation.SelectedIndex == 4)
+            {
+                task = 4;
+            }
+
+            if (CB_Implementation.SelectedIndex == 5)
+            {
+                task = 5;
+            }
+
+            if (CB_Implementation.SelectedIndex == 6)
+            {
+                task = 6;
+            }
+        }
+
+        //button used to create task instance in accordance to the drop down, adds job to queue and then creates grid location of task
+        private void btn_CreateJob_Click(object sender, EventArgs e)
+        {
+
+            Job newJob = new Job(0, JobLocation, " ");
+
+
+            if (task == 0)
+            {
+                JobLocation = new Point(2, 2);
+
+                newJob = new Job(1, JobLocation, "check-botanist");
+
+                grid.GetTile(JobLocation.X, JobLocation.Y).Type = new CheckBotanist();
+
+            }
+
+            if (task == 1)
+            {
+                JobLocation = new Point(3, 5);
+
+                newJob = new Job(2, JobLocation, "check-Footprint");
+
+                grid.GetTile(JobLocation.X, JobLocation.Y).Type = new CheckFootprint();
+            }
+
+            if (task == 2)
+            {
+                JobLocation = new Point(17, 6);
+
+                newJob = new Job(3, JobLocation, "check-radiation");
+
+                grid.GetTile(JobLocation.X, JobLocation.Y).Type = new CheckRadiation();
+            }
+
+            if (task == 3)
+            {
+                JobLocation = new Point(9, 0);
+
+                newJob = new Job(4, JobLocation, "flag");
+
+                grid.GetTile(JobLocation.X, JobLocation.Y).Type = new Flag();
+            }
+
+            if (task == 4)
+            {
+                JobLocation = new Point(2, 17);
+
+                newJob = new Job(5, JobLocation, "get-toolbox");
+
+                grid.GetTile(JobLocation.X, JobLocation.Y).Type = new GetToolbox();
+            }
+
+            if (task == 5)
+            {
+                JobLocation = new Point(0, 1);
+
+                newJob = new Job(6, JobLocation, "panel-dust");
+
+                grid.GetTile(JobLocation.X, JobLocation.Y).Type = new PanelDust();
+            }
+
+            if (task == 6)
+            {
+                JobLocation = new Point(18, 19);
+
+                newJob = new Job(7, JobLocation, "soil-sample");
+
+                grid.GetTile(JobLocation.X, JobLocation.Y).Type = new SoilSample();
+            }
+
+
+            jobManager.AddJob(newJob, newJob.Priority);
+
+            Panel_Map.Invalidate();
+
+            Lbl_JobList.Text = jobManager.createList();
+        }
+        
+        private void Lbl_RobotStatus_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
+        }
+        
+        private void Lbl_JobList_Click(object sender, EventArgs e)
+        {
+
+        }
+
     }
 }
+
+

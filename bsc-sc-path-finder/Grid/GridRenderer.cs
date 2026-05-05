@@ -31,7 +31,6 @@ namespace bsc_sc_path_finder
                     else g.DrawImage(sprite, x * tileSize, y * tileSize, tileSize, tileSize);                    
                 }
             }
-
             // always draw robot last so it’s on top
             if (robot != null)
             {
