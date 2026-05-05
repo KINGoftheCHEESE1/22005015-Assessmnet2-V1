@@ -92,13 +92,12 @@ namespace bsc_sc_path_finder
             }
         }
 
-        public void OnPathAnimationComplete()
+        public static void OnPathAnimationComplete()
         {
             MessageBox.Show("Move operation complete");
-
-            removeGridTask();
         }
 
+        //removes the grid tile for the current task, the job from queue and rewrites the upcoming jobs list
         public void removeGridTask()
         {
             Job location = jobManager.GetJob();
@@ -112,6 +111,7 @@ namespace bsc_sc_path_finder
             Lbl_JobList.Text = jobManager.createList();
         }
 
+        //creates a path to the next highest priority task and moves robot there
         private void Btn_ExecuteJob_Click(object sender, EventArgs e)
         {
             Job location = jobManager.GetJob();
@@ -120,9 +120,11 @@ namespace bsc_sc_path_finder
 
             var path = dumbPathFinder.FindPath(robot.Position, location.Location);
             pathAnimator.Start(path);
-            
+
+            removeGridTask();
         }
 
+        //drop down menu to select task
         private void CB_Implementation_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (CB_Implementation.SelectedIndex == 0)
@@ -161,6 +163,7 @@ namespace bsc_sc_path_finder
             }
         }
 
+        //button used to create task instance in accordance to the drop down, adds job to queue and then creates grid location of task
         private void btn_CreateJob_Click(object sender, EventArgs e)
         {
 

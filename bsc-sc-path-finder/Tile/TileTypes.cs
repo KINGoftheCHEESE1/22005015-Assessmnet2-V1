@@ -20,6 +20,8 @@ namespace bsc_sc_path_finder
         public bool IsWalkable { get { return false; } }
     }
 
+
+    //tile loader for each of the defined jobs the robot can do
     public class CheckBotanist : ITileType
     {
         public Image Sprite { get { return Properties.Resources.check_botanist; } }
