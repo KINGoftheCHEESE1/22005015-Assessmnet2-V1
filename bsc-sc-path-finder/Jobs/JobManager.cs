@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using PriorityQueue;
 
-namespace bsc_sc_path_finder.Jobs
+namespace bsc_sc_path_finder
 { 
 
     public class JobManager

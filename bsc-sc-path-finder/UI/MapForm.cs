@@ -1,4 +1,4 @@
-﻿using bsc_sc_path_finder.Jobs;
+﻿using bsc_sc_path_finder.Pathing;
 using System;
 using System.Drawing;
 using System.Threading.Tasks;
@@ -14,8 +14,10 @@ namespace bsc_sc_path_finder
         private DumbPathFinder dumbPathFinder;
         private PathAnimator pathAnimator;
         private int task;
+        private int pathing;
         private Point JobLocation;
         private JobManager jobManager;
+        //private var path;
 
         public MapForm()
         {
@@ -51,6 +53,7 @@ namespace bsc_sc_path_finder
                 // Setup renderer, dumb path finder and animator to use this new map
                 gridRenderer = new GridRenderer(grid);
                 dumbPathFinder = new DumbPathFinder();
+                BFSPathFinder = new BFSpathing();
                 pathAnimator = new PathAnimator(robot, Panel_Map);
 
                 Lbl_RobotStatus.Text = "> New map loaded";
@@ -82,8 +85,18 @@ namespace bsc_sc_path_finder
             // Animate to clicked cell using dumb path finder
             try
             {
-                var path = dumbPathFinder.FindPath(robot.Position, new Point(clickedTile.X, clickedTile.Y));
-                pathAnimator.Start(path);
+                if (pathing == 0)
+                {
+                    var path = dumbPathFinder.FindPath(robot.Position, new Point(clickedTile.X, clickedTile.Y));
+                    pathAnimator.Start(path);
+                }
+                else if (pathing == 1)
+                {
+                    var path = BFSPathFinder.FindPath(robot.Position, new Point(clickedTile.X, clickedTile.Y));
+                    pathAnimator.Start(path);
+                }
+
+               
                 Lbl_RobotStatus.Text = $"Moving to {clickedTile.ToString()}";
             }
             catch (Exception ex)
@@ -118,9 +131,13 @@ namespace bsc_sc_path_finder
 
             Lbl_RobotStatus.Text = $"Moving to {location.Description}";
 
-            var path = dumbPathFinder.FindPath(robot.Position, location.Location);
-            pathAnimator.Start(path);
 
+            if (pathing == 0)
+            {
+                var path = dumbPathFinder.FindPath(robot.Position, location.Location);
+                pathAnimator.Start(path);
+            }
+            
             removeGridTask();
         }
 
@@ -241,7 +258,14 @@ namespace bsc_sc_path_finder
 
             Lbl_JobList.Text = jobManager.createList();
         }
-        
+        private void CB_Pathing_SelectedIndexChanged(object sender, EventArgs e)
+        {
+           if (CB_Pathing.SelectedIndex == 0)
+            {
+                pathing = 0;
+            }
+        }
+
         private void Lbl_RobotStatus_Click(object sender, EventArgs e)
         {
 
@@ -256,6 +280,7 @@ namespace bsc_sc_path_finder
         {
 
         }
+
 
     }
 }
