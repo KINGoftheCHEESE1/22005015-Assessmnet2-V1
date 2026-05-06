@@ -14,6 +14,7 @@ namespace bsc_sc_path_finder
         private List<Point> path;
         private int index;
 
+        //event listener used for timer tick
         public event Action AnimationFinish;
 
         public bool IsRunning { get; private set; }
@@ -50,6 +51,7 @@ namespace bsc_sc_path_finder
             {
                 Stop();
 
+                //used to call event in MapForm to remove task after animation
                 AnimationFinish?.Invoke();
                 return;
             }

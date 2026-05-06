@@ -19,7 +19,6 @@ namespace bsc_sc_path_finder
         private int pathing;
         private Point JobLocation;
         private JobManager jobManager;
-        //private var path;
 
         public MapForm()
         {
@@ -57,6 +56,8 @@ namespace bsc_sc_path_finder
                 dumbPathFinder = new DumbPathFinder();
                 BFSPathFinder = new BFSpathing();
                 pathAnimator = new PathAnimator(robot, Panel_Map);
+
+                //used to call in the event listener to the form
                 pathAnimator.AnimationFinish += OnPathAnimationComplete;
 
                 Lbl_RobotStatus.Text = "> New map loaded";
@@ -85,7 +86,7 @@ namespace bsc_sc_path_finder
 
             Tile clickedTile = grid.GetTile(tileX, tileY);
 
-            // Animate to clicked cell using dumb path finder
+            // Animate to clicked cell using selected path finder
             try
             {
                 if (pathing == 0)
@@ -115,10 +116,9 @@ namespace bsc_sc_path_finder
             MessageBox.Show("Movement completed");
         }
 
-        //removes the grid tile for the current task, the job from queue and rewrites the upcoming jobs list
+        //removes the grid tile for the current task, the job from queue and rewrites the upcoming jobs list if exists
         public void removeGridTask()
         {
-
             if (jobManager.CheckJobs() == false)
             {
                 Job location = jobManager.GetJob();
@@ -141,7 +141,7 @@ namespace bsc_sc_path_finder
 
             Lbl_RobotStatus.Text = $"Moving to {location.Description}";
 
-
+            //use selected pathing
             if (pathing == 0)
             {
                 var path = dumbPathFinder.FindPath(robot.Position, location.Location);
@@ -274,6 +274,7 @@ namespace bsc_sc_path_finder
         }
         private void CB_Pathing_SelectedIndexChanged(object sender, EventArgs e)
         {
+            //select pathing using drop down
            if (CB_Pathing.SelectedIndex == 0)
             {
                 pathing = 0;
@@ -282,11 +283,6 @@ namespace bsc_sc_path_finder
             if (CB_Pathing.SelectedIndex == 1)
             {
                 pathing = 1;
-            }
-
-            if(CB_Pathing.SelectedIndex == 2)
-            {
-                pathing = 2;
             }
         }
 
