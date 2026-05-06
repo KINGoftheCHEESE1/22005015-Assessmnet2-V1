@@ -1,4 +1,5 @@
 ﻿using bsc_sc_path_finder.Pathing;
+using bsc_sc_path_finder.Jobs;
 using System;
 using System.Drawing;
 using System.Threading.Tasks;
@@ -12,6 +13,7 @@ namespace bsc_sc_path_finder
         private Grid grid;
         private Robot robot;
         private DumbPathFinder dumbPathFinder;
+        private BFSpathing BFSPathFinder;
         private PathAnimator pathAnimator;
         private int task;
         private int pathing;
@@ -92,7 +94,7 @@ namespace bsc_sc_path_finder
                 }
                 else if (pathing == 1)
                 {
-                    var path = BFSPathFinder.FindPath(robot.Position, new Point(clickedTile.X, clickedTile.Y));
+                    var path = BFSPathFinder.FindPath(grid, robot.Position, new Point(clickedTile.X, clickedTile.Y));
                     pathAnimator.Start(path);
                 }
 
@@ -137,7 +139,12 @@ namespace bsc_sc_path_finder
                 var path = dumbPathFinder.FindPath(robot.Position, location.Location);
                 pathAnimator.Start(path);
             }
-            
+
+            if (pathing == 1)
+            {
+                var path = BFSPathFinder.FindPath(grid, robot.Position, location.Location);
+                pathAnimator.Start(path);
+            }
             removeGridTask();
         }
 
@@ -263,6 +270,16 @@ namespace bsc_sc_path_finder
            if (CB_Pathing.SelectedIndex == 0)
             {
                 pathing = 0;
+            }
+
+            if (CB_Pathing.SelectedIndex == 1)
+            {
+                pathing = 1;
+            }
+
+            if(CB_Pathing.SelectedIndex == 2)
+            {
+                pathing = 2;
             }
         }
 
