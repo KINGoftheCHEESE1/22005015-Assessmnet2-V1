@@ -20,7 +20,9 @@ namespace bsc_sc_path_finder.Pathing
 
             var path = new List<Point>();
 
-            bool found = false;
+            var discovered = new List<Point>();
+
+            var movedFrom = new Dictionary<Point, Point>();
             
             int tempX;
             int tempY;
@@ -33,122 +35,128 @@ namespace bsc_sc_path_finder.Pathing
 
             discoveryQueue.Enqueue(start, priority);
 
-            while (discoveryQueue.IsEmpty() == false && found == false)
+            discovered.Add(start);
+
+            while (discoveryQueue.IsEmpty() == false)
             {
                 priority--;
                 current = discoveryQueue.Peek();
-
-                tempX = getLeft(current.X);
-                tempY = current.Y;
-
-                if (!found)
-                {
-                    if (tempX < grid.Width && tempY < grid.Height && tempX >= 0 && tempY >= 0)
-                    {
-                        if (visited[tempX, tempY] == false && grid.GetTile(tempX, tempY) != null)
-                        {
-                            ITileType tempTile = grid.GetTile(tempX, tempY).Type;
-
-                            if (tempTile.IsWalkable == true && grid.GetTile(tempX, tempY) != null)
-                            {
-                                visited[tempX, tempY] = true;
-                                Point tempPoint = new Point(tempX, tempY);
-                                discoveryQueue.Enqueue(tempPoint, priority);
-
-                                path.Add(tempPoint);
-
-                                if (tempX == goal.X && tempY == goal.Y)
-                                {
-                                    found = true;
-                                }
-                            }
-                        }
-                    }
-                }
-
-                tempX = getRight(current.X);
-
-                if (!found)
-                {
-                    if (tempX < grid.Width && tempY < grid.Height && tempX >= 0 && tempY >= 0)
-                    {
-                        if (visited[tempX, tempY] == false && grid.GetTile(tempX, tempY) != null)
-                        {
-                            ITileType tempTile = grid.GetTile(tempX, tempY).Type;
-
-                            if (tempTile.IsWalkable == true && grid.GetTile(tempX, tempY) != null)
-                            {
-                                visited[tempX, tempY] = true;
-                                Point tempPoint = new Point(tempX, tempY);
-                                discoveryQueue.Enqueue(tempPoint, priority);
-
-                                path.Add(tempPoint);
-
-                                if (tempX == goal.X && tempY == goal.Y)
-                                {
-                                    found = true;
-                                }
-                            }
-                        }
-                    }
-                }
-
-                tempX = current.X;
-                tempY = getAbove(current.Y);
-
-                if (!found)
-                {
-                    if (tempX < grid.Width && tempY < grid.Height && tempX >= 0 && tempY >= 0)
-                    {
-                        if (visited[tempX, tempY] == false && grid.GetTile(tempX, tempY) != null)
-                        {
-                            ITileType tempTile = grid.GetTile(tempX, tempY).Type;
-
-                            if (tempTile.IsWalkable == true && grid.GetTile(tempX, tempY) != null)
-                            {
-                                visited[tempX, tempY] = true;
-                                Point tempPoint = new Point(tempX, tempY);
-                                discoveryQueue.Enqueue(tempPoint, priority);
-
-                                path.Add(tempPoint);
-
-                                if (tempX == goal.X && tempY == goal.Y)
-                                {
-                                    found = true;
-                                }
-                            }
-                        }
-                    }
-                }
-
-                tempY = getBelow(current.Y);
-
-                if (!found)
-                {
-                    if (tempX < grid.Width && tempY < grid.Height && tempX >= 0 && tempY >= 0)
-                    {
-                        if (visited[tempX, tempY] == false && grid.GetTile(tempX, tempY) != null)
-                        {
-                            ITileType tempTile = grid.GetTile(tempX, tempY).Type;
-
-                            if (tempTile.IsWalkable == true && grid.GetTile(tempX, tempY) != null)
-                            {
-                                visited[tempX, tempY] = true;
-                                Point tempPoint = new Point(tempX, tempY);
-                                discoveryQueue.Enqueue(tempPoint, priority);
-
-                                path.Add(tempPoint);
-
-                                if (tempX == goal.X && tempY == goal.Y)
-                                {
-                                    found = true;
-                                }
-                            }
-                        }
-                    }
-                }
-
                 discoveryQueue.Dequeue();
+
+                if (current == goal) {
+
+                    var temp = goal;
+
+                    while (temp != start)
+                    {
+                        path.Add(temp);
+                        temp = movedFrom[temp];
+                    }
+
+                    path.Reverse();
+
+                    return path;
+                }
+
+                if (current != goal)
+                {
+
+                    tempX = getLeft(current.X);
+                    tempY = current.Y;
+
+                    
+
+                    if (tempX < grid.Width && tempY < grid.Height && tempX >= 0 && tempY >= 0)
+                    {
+                        if (visited[tempX, tempY] == false && grid.GetTile(tempX, tempY) != null)
+                        {
+                            ITileType tempTile = grid.GetTile(tempX, tempY).Type;
+
+                            if (tempTile.IsWalkable == true && grid.GetTile(tempX, tempY) != null)
+                            {
+                                Point tempPoint = new Point(tempX, tempY);
+                                visited[tempX, tempY] = true;
+                                
+                                discoveryQueue.Enqueue(tempPoint, priority);
+
+                                discovered.Add(tempPoint);
+
+                                movedFrom[tempPoint] = current;
+                            }
+                        }
+                    }
+
+
+                    tempX = getRight(current.X);
+
+
+                    if (tempX < grid.Width && tempY < grid.Height && tempX >= 0 && tempY >= 0)
+                    {
+                        if (visited[tempX, tempY] == false && grid.GetTile(tempX, tempY) != null)
+                        {
+                            ITileType tempTile = grid.GetTile(tempX, tempY).Type;
+
+                            if (tempTile.IsWalkable == true && grid.GetTile(tempX, tempY) != null)
+                            {
+                                Point tempPoint = new Point(tempX, tempY);
+                                visited[tempX, tempY] = true;
+
+                                discoveryQueue.Enqueue(tempPoint, priority);
+
+                                discovered.Add(tempPoint);
+
+                                movedFrom[tempPoint] = current;
+                            }
+                        }
+                    }
+
+
+                    tempX = current.X;
+                    tempY = getAbove(current.Y);
+
+                    if (tempX < grid.Width && tempY <= grid.Height && tempX >= 0 && tempY >= 0)
+                    {
+                        if (visited[tempX, tempY] == false && grid.GetTile(tempX, tempY) != null)
+                        {
+                            ITileType tempTile = grid.GetTile(tempX, tempY).Type;
+
+                            if (tempTile.IsWalkable == true && grid.GetTile(tempX, tempY) != null)
+                            {
+                                Point tempPoint = new Point(tempX, tempY);
+                                visited[tempX, tempY] = true;
+
+                                discoveryQueue.Enqueue(tempPoint, priority);
+
+                                discovered.Add(tempPoint);
+
+                                movedFrom[tempPoint] = current;
+                            }
+                        }
+                    }
+
+
+                    tempY = getBelow(current.Y);
+
+                    if (tempX < grid.Width && tempY < grid.Height && tempX >= 0 && tempY >= 0)
+                    {
+                        if (visited[tempX, tempY] == false && grid.GetTile(tempX, tempY) != null)
+                        {
+                            ITileType tempTile = grid.GetTile(tempX, tempY).Type;
+
+                            if (tempTile.IsWalkable == true && grid.GetTile(tempX, tempY) != null)
+                            {
+                                Point tempPoint = new Point(tempX, tempY);
+                                visited[tempX, tempY] = true;
+
+                                discoveryQueue.Enqueue(tempPoint, priority);
+
+                                discovered.Add(tempPoint);
+
+                                movedFrom[tempPoint] = current;
+                            }
+                        }
+                    }
+                }
             }
             return path;
         }

@@ -27,6 +27,8 @@ namespace bsc_sc_path_finder
                 path.Add(new Point(x, y));
             }
 
+
+
             return path;
         }
     }

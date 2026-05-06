@@ -57,6 +57,7 @@ namespace bsc_sc_path_finder
                 dumbPathFinder = new DumbPathFinder();
                 BFSPathFinder = new BFSpathing();
                 pathAnimator = new PathAnimator(robot, Panel_Map);
+                pathAnimator.AnimationFinish += OnPathAnimationComplete;
 
                 Lbl_RobotStatus.Text = "> New map loaded";
                 Panel_Map.Invalidate(); // Force re-draw
@@ -107,23 +108,30 @@ namespace bsc_sc_path_finder
             }
         }
 
-        public static void OnPathAnimationComplete()
-        {
-            MessageBox.Show("Move operation complete");
+        public void OnPathAnimationComplete()
+        { 
+            removeGridTask();
+            
+            MessageBox.Show("Movement completed");
         }
 
         //removes the grid tile for the current task, the job from queue and rewrites the upcoming jobs list
         public void removeGridTask()
         {
-            Job location = jobManager.GetJob();
 
-            grid.GetTile(location.Location.X, location.Location.Y).Type = new FloorTileType();
+            if (jobManager.CheckJobs() == false)
+            {
+                Job location = jobManager.GetJob();
+
+                grid.GetTile(location.Location.X, location.Location.Y).Type = new FloorTileType();
+
+                jobManager.RemoveJob();
+            }
 
             Panel_Map.Invalidate();
 
-            jobManager.RemoveJob();
-
             Lbl_JobList.Text = jobManager.createList();
+
         }
 
         //creates a path to the next highest priority task and moves robot there
@@ -145,7 +153,6 @@ namespace bsc_sc_path_finder
                 var path = BFSPathFinder.FindPath(grid, robot.Position, location.Location);
                 pathAnimator.Start(path);
             }
-            removeGridTask();
         }
 
         //drop down menu to select task
