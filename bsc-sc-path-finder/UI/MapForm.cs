@@ -1,4 +1,5 @@
-﻿using bsc_sc_path_finder.Jobs;
+﻿using bsc_sc_path_finder.Pathing;
+using bsc_sc_path_finder.Jobs;
 using System;
 using System.Drawing;
 using System.Threading.Tasks;
@@ -12,10 +13,13 @@ namespace bsc_sc_path_finder
         private Grid grid;
         private Robot robot;
         private DumbPathFinder dumbPathFinder;
+        private BFSpathing BFSPathFinder;
         private PathAnimator pathAnimator;
         private int task;
+        private int pathing;
         private Point JobLocation;
         private JobManager jobManager;
+        //private var path;
 
         public MapForm()
         {
@@ -51,7 +55,9 @@ namespace bsc_sc_path_finder
                 // Setup renderer, dumb path finder and animator to use this new map
                 gridRenderer = new GridRenderer(grid);
                 dumbPathFinder = new DumbPathFinder();
+                BFSPathFinder = new BFSpathing();
                 pathAnimator = new PathAnimator(robot, Panel_Map);
+                pathAnimator.AnimationFinish += OnPathAnimationComplete;
 
                 Lbl_RobotStatus.Text = "> New map loaded";
                 Panel_Map.Invalidate(); // Force re-draw
@@ -82,8 +88,18 @@ namespace bsc_sc_path_finder
             // Animate to clicked cell using dumb path finder
             try
             {
-                var path = dumbPathFinder.FindPath(robot.Position, new Point(clickedTile.X, clickedTile.Y));
-                pathAnimator.Start(path);
+                if (pathing == 0)
+                {
+                    var path = dumbPathFinder.FindPath(robot.Position, new Point(clickedTile.X, clickedTile.Y));
+                    pathAnimator.Start(path);
+                }
+                else if (pathing == 1)
+                {
+                    var path = BFSPathFinder.FindPath(grid, robot.Position, new Point(clickedTile.X, clickedTile.Y));
+                    pathAnimator.Start(path);
+                }
+
+               
                 Lbl_RobotStatus.Text = $"Moving to {clickedTile.ToString()}";
             }
             catch (Exception ex)
@@ -92,23 +108,30 @@ namespace bsc_sc_path_finder
             }
         }
 
-        public static void OnPathAnimationComplete()
-        {
-            MessageBox.Show("Move operation complete");
+        public void OnPathAnimationComplete()
+        { 
+            removeGridTask();
+            
+            MessageBox.Show("Movement completed");
         }
 
         //removes the grid tile for the current task, the job from queue and rewrites the upcoming jobs list
         public void removeGridTask()
         {
-            Job location = jobManager.GetJob();
 
-            grid.GetTile(location.Location.X, location.Location.Y).Type = new FloorTileType();
+            if (jobManager.CheckJobs() == false)
+            {
+                Job location = jobManager.GetJob();
+
+                grid.GetTile(location.Location.X, location.Location.Y).Type = new FloorTileType();
+
+                jobManager.RemoveJob();
+            }
 
             Panel_Map.Invalidate();
 
-            jobManager.RemoveJob();
-
             Lbl_JobList.Text = jobManager.createList();
+
         }
 
         //creates a path to the next highest priority task and moves robot there
@@ -118,10 +141,18 @@ namespace bsc_sc_path_finder
 
             Lbl_RobotStatus.Text = $"Moving to {location.Description}";
 
-            var path = dumbPathFinder.FindPath(robot.Position, location.Location);
-            pathAnimator.Start(path);
 
-            removeGridTask();
+            if (pathing == 0)
+            {
+                var path = dumbPathFinder.FindPath(robot.Position, location.Location);
+                pathAnimator.Start(path);
+            }
+
+            if (pathing == 1)
+            {
+                var path = BFSPathFinder.FindPath(grid, robot.Position, location.Location);
+                pathAnimator.Start(path);
+            }
         }
 
         //drop down menu to select task
@@ -241,7 +272,24 @@ namespace bsc_sc_path_finder
 
             Lbl_JobList.Text = jobManager.createList();
         }
-        
+        private void CB_Pathing_SelectedIndexChanged(object sender, EventArgs e)
+        {
+           if (CB_Pathing.SelectedIndex == 0)
+            {
+                pathing = 0;
+            }
+
+            if (CB_Pathing.SelectedIndex == 1)
+            {
+                pathing = 1;
+            }
+
+            if(CB_Pathing.SelectedIndex == 2)
+            {
+                pathing = 2;
+            }
+        }
+
         private void Lbl_RobotStatus_Click(object sender, EventArgs e)
         {
 
@@ -256,6 +304,7 @@ namespace bsc_sc_path_finder
         {
 
         }
+
 
     }
 }

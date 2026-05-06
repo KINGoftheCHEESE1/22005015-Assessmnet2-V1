@@ -39,6 +39,8 @@
             this.Lbl_JobList = new System.Windows.Forms.Label();
             this.btn_CreateJob = new System.Windows.Forms.Button();
             this.CB_Implementation = new System.Windows.Forms.ComboBox();
+            this.CB_Pathing = new System.Windows.Forms.ComboBox();
+            this.lbl_pathing = new System.Windows.Forms.Label();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -178,12 +180,44 @@
             this.CB_Implementation.TabIndex = 4;
             this.CB_Implementation.SelectedIndexChanged += new System.EventHandler(this.CB_Implementation_SelectedIndexChanged);
             // 
+            // CB_Pathing
+            // 
+            this.CB_Pathing.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(183)))), ((int)(((byte)(111)))), ((int)(((byte)(52)))));
+            this.CB_Pathing.CausesValidation = false;
+            this.CB_Pathing.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CB_Pathing.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.CB_Pathing.FormattingEnabled = true;
+            this.CB_Pathing.Items.AddRange(new object[] {
+            "Dumb Path Finder",
+            "BFS Path Finding",
+            "Astar Path Finding"});
+            this.CB_Pathing.Location = new System.Drawing.Point(834, 616);
+            this.CB_Pathing.Name = "CB_Pathing";
+            this.CB_Pathing.Size = new System.Drawing.Size(209, 26);
+            this.CB_Pathing.TabIndex = 5;
+            this.CB_Pathing.SelectedIndexChanged += new System.EventHandler(this.CB_Pathing_SelectedIndexChanged);
+            // 
+            // lbl_pathing
+            // 
+            this.lbl_pathing.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(46)))), ((int)(((byte)(40)))));
+            this.lbl_pathing.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_pathing.ForeColor = System.Drawing.Color.LawnGreen;
+            this.lbl_pathing.Location = new System.Drawing.Point(658, 613);
+            this.lbl_pathing.Name = "lbl_pathing";
+            this.lbl_pathing.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
+            this.lbl_pathing.Size = new System.Drawing.Size(170, 34);
+            this.lbl_pathing.TabIndex = 6;
+            this.lbl_pathing.Text = "> Pathing type used";
+            this.lbl_pathing.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // MapForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(223)))), ((int)(((byte)(196)))), ((int)(((byte)(153)))));
-            this.ClientSize = new System.Drawing.Size(1141, 664);
+            this.ClientSize = new System.Drawing.Size(1141, 663);
+            this.Controls.Add(this.lbl_pathing);
+            this.Controls.Add(this.CB_Pathing);
             this.Controls.Add(this.CB_Implementation);
             this.Controls.Add(this.btn_CreateJob);
             this.Controls.Add(this.Lbl_JobList);
@@ -211,6 +245,8 @@
         private System.Windows.Forms.Button Btn_LoadMap;
         private System.Windows.Forms.Button btn_CreateJob;
         private System.Windows.Forms.ComboBox CB_Implementation;
+        private System.Windows.Forms.ComboBox CB_Pathing;
+        private System.Windows.Forms.Label lbl_pathing;
     }
 }
 

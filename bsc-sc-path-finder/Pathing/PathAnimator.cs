@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Security.Cryptography.X509Certificates;
 using System.Windows.Forms;
 
 namespace bsc_sc_path_finder
@@ -12,6 +13,8 @@ namespace bsc_sc_path_finder
         private readonly Timer timer;
         private List<Point> path;
         private int index;
+
+        public event Action AnimationFinish;
 
         public bool IsRunning { get; private set; }
 
@@ -46,7 +49,8 @@ namespace bsc_sc_path_finder
             if (index >= path.Count)
             {
                 Stop();
-                MapForm.OnPathAnimationComplete();
+
+                AnimationFinish?.Invoke();
                 return;
             }
 
