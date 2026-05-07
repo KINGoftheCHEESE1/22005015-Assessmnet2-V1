@@ -14,6 +14,15 @@ namespace bsc_sc_path_finder.Pathing
 
         SortedArrayPriorityQueue<Point> discoveryQueue;
 
+        
+        /// <summary>
+        /// this function is used to find a path between the robot and the goal through the use of BFS
+        /// skips unwalkable tiles on grid
+        /// </summary>
+        /// <param name="grid">the current grid object of the map</param>
+        /// <param name="start">the robot location, starting poitn for the path</param>
+        /// <param name="goal">the coordinate being searched for by the BFS algorithm</param>
+        /// <returns>path, coordinate list between the starting point and goal point</returns>
         public List<Point> FindPath(Grid grid, Point start, Point goal)
         {
             //variables used for BFS search
@@ -165,13 +174,35 @@ namespace bsc_sc_path_finder.Pathing
             return path;
         }
 
-        //gets left coord
+        /// <summary>
+        /// gets the coordinate to the left of the current tile
+        /// </summary>
+        /// <param name="x">X coordinate of current tile</param>
+        /// <returns></returns>
         int getLeft(int x) {  return x - 1; }
-        //get right coord
+
+
+        /// <summary>
+        /// gets the coordinate to the right of the current tile
+        /// </summary>
+        /// <param name="x">X coordinate of current tile</param>
+        /// <returns></returns>
         int getRight(int x) { return x + 1; }
-        //get above coord
+
+
+        /// <summary>
+        /// gets the coordinate above the current tile
+        /// </summary>
+        /// <param name="y">Y coordinate of current tile</param>
+        /// <returns></returns>
         int getAbove(int y) { return y - 1; }
-        //get below coord
+
+
+        /// <summary>
+        /// gets the coordinate below the current tile
+        /// </summary>
+        /// <param name="y">Y coordinate of current tile</param>
+        /// <returns></returns>
         int getBelow(int y) { return y + 1; }
 
         

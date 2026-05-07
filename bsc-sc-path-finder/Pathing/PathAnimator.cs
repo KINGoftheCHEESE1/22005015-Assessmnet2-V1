@@ -45,6 +45,12 @@ namespace bsc_sc_path_finder
             IsRunning = false;
         }
 
+        /// <summary>
+        /// timer for animation
+        /// event listener added for animation end as to delete task when robot arrives on tile.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e">event</param>
         private void Timer_Tick(object sender, EventArgs e)
         {
             if (index >= path.Count)

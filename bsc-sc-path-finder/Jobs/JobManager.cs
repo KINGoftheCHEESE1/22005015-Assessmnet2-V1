@@ -15,19 +15,28 @@ namespace bsc_sc_path_finder.Jobs
 
         private SortedArrayPriorityQueue<Job> jobQueue;
 
-        //constructor to call the sorted array priority queue
+        /// <summary>
+        /// constructor for Job Manager
+        /// </summary>
         public JobManager()
         {
             jobQueue = new SortedArrayPriorityQueue<Job>(100);
         }
 
-        //checks if job queue is empty
+        /// <summary>
+        /// checks if queue is empty
+        /// </summary>
+        /// <returns>returns true or false</returns>
         public bool CheckJobs()
         {
             return jobQueue.IsEmpty();
         }
 
-        //removes the highest priority queue item
+
+        /// <summary>
+        /// removes the highest priority item from job queue
+        /// </summary>
+        /// <exception cref="InvalidOperationException">throws an exception if job queue is empty</exception>
         public void RemoveJob()
         {
             try
@@ -40,19 +49,29 @@ namespace bsc_sc_path_finder.Jobs
             }
         }
 
-        //returns the highest priority job
+        /// <summary>
+        /// gets the queue item for the highest priority item
+        /// </summary>
+        /// <returns>the highest priority job object</returns>
         public Job GetJob()
         {
             return jobQueue.Peek();
         }
 
-        //adds a new job to the queue
+        /// <summary>
+        /// adds a job object to the priority queue with a given priority
+        /// </summary>
+        /// <param name="job">job object to be stored</param>
+        /// <param name="Priority">priority of the job</param>
         public void AddJob(Job job, int Priority)
         {
             jobQueue.Enqueue(job, Priority);
         }
 
-        //creates a string list of all the jobs currently in queue
+        /// <summary>
+        /// writes entire priority queue to string
+        /// </summary>
+        /// <returns>the concatinated string variable</returns>
         public string createList()
         {
             string taskList = jobQueue.ToString();
