@@ -121,6 +121,7 @@ namespace bsc_sc_path_finder
 
         /// <summary>
         /// removes the grid tile for the current task, the job from queue and rewrites the upcoming jobs list if exists
+        /// </summary>
         public void removeGridTask()
         {
             if (jobManager.CheckJobs() == false)
