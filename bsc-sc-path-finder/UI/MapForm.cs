@@ -109,6 +109,9 @@ namespace bsc_sc_path_finder
             }
         }
 
+        /// <summary>
+        /// runs when event is triggered Path animator
+        /// </summary>
         public void OnPathAnimationComplete()
         { 
             removeGridTask();
@@ -116,7 +119,8 @@ namespace bsc_sc_path_finder
             MessageBox.Show("Movement completed");
         }
 
-        //removes the grid tile for the current task, the job from queue and rewrites the upcoming jobs list if exists
+        /// <summary>
+        /// removes the grid tile for the current task, the job from queue and rewrites the upcoming jobs list if exists
         public void removeGridTask()
         {
             if (jobManager.CheckJobs() == false)
@@ -134,7 +138,11 @@ namespace bsc_sc_path_finder
 
         }
 
-        //creates a path to the next highest priority task and moves robot there
+        /// <summary>
+        /// creates a path to the next highest priority task and moves robot there
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e">event</param>
         private void Btn_ExecuteJob_Click(object sender, EventArgs e)
         {
             Job location = jobManager.GetJob();
@@ -155,7 +163,11 @@ namespace bsc_sc_path_finder
             }
         }
 
-        //drop down menu to select task
+        /// <summary>
+        /// drop down menu to select task
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e">event</param>
         private void CB_Implementation_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (CB_Implementation.SelectedIndex == 0)
@@ -194,7 +206,11 @@ namespace bsc_sc_path_finder
             }
         }
 
-        //button used to create task instance in accordance to the drop down, adds job to queue and then creates grid location of task
+        /// <summary>
+        /// button used to create task instance in accordance to the drop down, adds job to queue and then creates grid location of task
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e">event</param>
         private void btn_CreateJob_Click(object sender, EventArgs e)
         {
 
@@ -272,6 +288,12 @@ namespace bsc_sc_path_finder
 
             Lbl_JobList.Text = jobManager.createList();
         }
+
+        /// <summary>
+        /// drop down menu to allow for selection of pathing algorithms
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CB_Pathing_SelectedIndexChanged(object sender, EventArgs e)
         {
             //select pathing using drop down
@@ -286,6 +308,8 @@ namespace bsc_sc_path_finder
             }
         }
 
+
+        //empty functions made by Missclicks on UI
         private void Lbl_RobotStatus_Click(object sender, EventArgs e)
         {
 

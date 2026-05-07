@@ -21,43 +21,65 @@ namespace bsc_sc_path_finder
     }
 
 
-    //tile loader for each of the defined jobs the robot can do
+    /// <summary>
+    /// details for the check botanist tile type, used to draw job on map
+    /// </summary>
     public class CheckBotanist : ITileType
     {
         public Image Sprite { get { return Properties.Resources.check_botanist; } }
         public bool IsWalkable { get { return true; } }
 
     }
+
+    /// <summary>
+    /// details for the check Footprints tile type, used to draw job on map
+    /// </summary>
     public class CheckFootprint : ITileType
     {
         public Image Sprite { get { return Properties.Resources.check_footprint; } }
         public bool IsWalkable { get { return true; } }
     }
 
+    /// <summary>
+    /// details for the check radiation tile type, used to draw job on map
+    /// </summary>
     public class CheckRadiation : ITileType
     {
         public Image Sprite { get { return Properties.Resources.check_radiation; } }
         public bool IsWalkable { get { return true; } }
     }
 
+    /// <summary>
+    /// details for the flag tile type, used to draw job on map
+    /// </summary>
     public class Flag : ITileType
     {
         public Image Sprite { get { return Properties.Resources.flag; } }
         public bool IsWalkable { get { return true; } }
 
     }
+
+    /// <summary>
+    /// details for the get toolbox tile type, used to draw job on map
+    /// </summary>
     public class GetToolbox : ITileType
     {
         public Image Sprite { get { return Properties.Resources.get_toolbox; } }
         public bool IsWalkable { get { return true; } }
     }
 
+    /// <summary>
+    /// details for the Panel Dust tile type, used to draw job on map
+    /// </summary>
     public class PanelDust : ITileType
     {
         public Image Sprite { get { return Properties.Resources.panel_dust; } }
         public bool IsWalkable { get { return true; } }
     }
 
+    /// <summary>
+    /// details for the Soil Sample tile type, used to draw job on map
+    /// </summary>
     public class SoilSample : ITileType
     {
         public Image Sprite { get { return Properties.Resources.soil_sample; } }
