@@ -1,12 +1,13 @@
-﻿using System;
+﻿using bsc_sc_path_finder;
+using Microsoft.VisualStudio.TestPlatform.Utilities;
+using NUnit.Framework;
+using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Drawing;
-using NUnit.Framework;
-using bsc_sc_path_finder;
-using Microsoft.VisualStudio.TestPlatform.Utilities;
+using static Microsoft.ApplicationInsights.MetricDimensionNames.TelemetryContext;
 
 namespace bsc_sc_path_finderTests
 {
@@ -18,8 +19,9 @@ namespace bsc_sc_path_finderTests
     {
         
         public DumbPathFinder dumbtest = new DumbPathFinder();
-        public BFSpathing BFStest = new BFSpathing();
+        public BFSpathing BFStest;
         public JobManager jobtest;
+        public Grid grid;
 
         [Test]
         public void job_starts_empty_test()
@@ -163,5 +165,18 @@ namespace bsc_sc_path_finderTests
 
             Assert.That(result, Is.EqualTo(true));
         }
+
+        //[Test]
+        //public void BFS_pathing_test()
+        //{
+        //    Point startTest = new Point(1, 1);
+        //    Point goalTest = new Point(10, 10);
+
+        //    BFStest = new BFSpathing();
+
+        //    var result = BFStest.FindPath(grid, startTest, goalTest).Last();
+
+        //    Assert.That(result, Is.EqualTo(goalTest));
+        //}
     }
 }
