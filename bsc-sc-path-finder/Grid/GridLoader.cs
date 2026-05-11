@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.IO;
-using bsc_sc_path_finder.Jobs;
+using bsc_sc_path_finder;
 
 
 //priority queue test
