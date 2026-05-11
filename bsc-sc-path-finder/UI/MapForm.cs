@@ -1,5 +1,4 @@
-﻿using bsc_sc_path_finder.Pathing;
-using bsc_sc_path_finder.Jobs;
+﻿using bsc_sc_path_finder;
 using System;
 using System.Drawing;
 using System.Threading.Tasks;

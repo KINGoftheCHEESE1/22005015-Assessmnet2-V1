@@ -95,7 +95,9 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Resources\map.txt" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="Resources\check-botanist.png" />
   </ItemGroup>

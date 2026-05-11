@@ -7,9 +7,9 @@ using System.Text;
 using System.Threading.Tasks;
 using PriorityQueue;
 
-namespace bsc_sc_path_finder.Pathing
+namespace bsc_sc_path_finder
 {
-    internal class BFSpathing
+    public class BFSpathing
     {
 
         SortedArrayPriorityQueue<Point> discoveryQueue;
